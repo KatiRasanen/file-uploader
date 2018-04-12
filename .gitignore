@@ -8,6 +8,7 @@
 
 # production
 /build
+/savedFiles
 
 # misc
 .DS_Store

@@ -8,16 +8,23 @@ const app = express();
 app.use(fileUpload());
 
 app.post('/', function(req, res) {
-  if (!req.files)
+
+  if (!req.files) {
     return res.status(400).send('No files were uploaded.');
+  }
 
   let uploadedFile = req.files.file;
-  // console.log(req.files);
+
+  if (!fs.existsSync('./savedFiles')){
+      fs.mkdirSync('./savedFiles');
+  }
 
   uploadedFile.mv(`./savedFiles/${uploadedFile.name}`, function(err) {
-    if (err)
+    if (err) {
       return res.status(500).send(err);
-    res.send(`Succesfully uploaded: ${uploadedFile.name}`);
+    } else {
+      return res.status(200).send(`Succesfully uploaded: ${uploadedFile.name}`);
+    }
   });
 });
 
@@ -26,7 +33,6 @@ app.get('/', function(req, res) {
   const fileToDownload = req._parsedUrl.query;
   const filepath = `C:\\dev\\file-uploader\\savedFiles\\${fileToDownload}`
   res.download(filepath);
-  console.log(filepath);
-  res.send({'download': filepath});
+  res.status(200).send(`download: ${filepath}`);
 });
 app.listen(8080);
