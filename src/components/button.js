@@ -4,7 +4,7 @@ class Uploader extends Component {
   render() {
     return (
       <button onClick={this.props.onClick}>
-        Submit
+        {this.props.text}
       </button>
     );
   }
