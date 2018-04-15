@@ -2,9 +2,15 @@ import React, {Component} from 'react';
 
 class Uploader extends Component {
   render() {
+    const {
+      onClick,
+      disabled,
+      text
+    } = this.props;
+
     return (
-      <button onClick={this.props.onClick} disabled={this.props.disabled}>
-        {this.props.text}
+      <button onClick={onClick} disabled={disabled}>
+        {text}
       </button>
     );
   }

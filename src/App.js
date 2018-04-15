@@ -1,16 +1,12 @@
 import React, { Component } from 'react';
+import fileDownload from 'js-file-download';
+
 import Uploader from './components/uploader';
 import Button from './components/button';
 
-import fileDownload from 'js-file-download';
-
 import './App.css';
 
-class App extends Component {
-
-  static propTypes = {
-
-  }
+export default class App extends Component {
 
   constructor() {
     super();
@@ -25,12 +21,11 @@ class App extends Component {
     data.append('file', this.state.file);
     data.append('name', this.state.file.name);
 
-    fetch('http://localhost:8080', {
+    window.fetch('http://localhost:8080', {
       method: 'POST',
       mode: 'no-cors',
       body: data
-    })
-    .then(
+    }).then(
       this.setState({
         ...this.state,
         enableDownload: true
@@ -38,28 +33,27 @@ class App extends Component {
     )
   }
 
-  onUploaderChange = (event) => {
-    this.setState({
-      ...this.state,
-      file: event.target.files[0]
-    });
-  }
-
   onDownloadClick = (event) => {
     let data = new FormData();
     data.append('name', this.state.file.name);
 
-    fetch(`http://localhost:8080?${this.state.file.name}`, {
+    window.fetch(`http://localhost:8080?${this.state.file.name}`, {
       method: 'GET',
       mode: 'no-cors',
     }).then(response => {
       return response.blob();
     }).then(response => {
-      console.log(URL);
       const objectURL = URL.createObjectURL(response);
       console.log(objectURL);
-      fileDownload('C:\\dev\\file-uploader\\savedFiles\\bday.png', `${this.state.file.name}`);
+      fileDownload('C:\\dev\\file-uploader\\savedFiles\\test.txt', `${this.state.file.name}`);
     })
+  }
+
+  onUploaderChange = (event) => {
+    this.setState({
+      ...this.state,
+      file: event.target.files[0]
+    });
   }
 
   render() {
@@ -76,5 +70,3 @@ class App extends Component {
     );
   }
 }
-
-export default App;
