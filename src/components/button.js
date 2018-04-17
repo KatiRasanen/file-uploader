@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-class Uploader extends Component {
+class Button extends Component {
   render() {
     const {
       onClick,
@@ -16,4 +16,4 @@ class Uploader extends Component {
   }
 }
 
-export default Uploader;
+export default Button;
